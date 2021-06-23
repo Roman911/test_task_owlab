@@ -1,25 +1,28 @@
-import logo from './logo.svg';
-import './App.css';
+import { BrowserRouter as Router, Switch, Route, Redirect } from "react-router-dom"
+import { useSelector } from 'react-redux'
+import { News, Login } from './modules'
+import { Home, NavBar, Profile } from './Components'
+import { UseAuth } from './hooks/useAuth'
 
 function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+  const { user: { data } } = useSelector(state => state)
+  UseAuth()
+
+  return <Router>
+    <div>
+      <NavBar userAuth={ data } />
+      <Switch >
+        <Route exact path='/' component={ Home } />
+        <Route path='/news' component={ News } />
+        <Route path='/profile' >
+          { !data ? <Redirect to='/login' /> : <Profile /> }
+        </Route>
+        <Route path='/login' >
+          { data ? <Redirect to='/profile' /> : <Login /> }
+        </Route>
+      </Switch>
     </div>
-  );
+  </Router>
 }
 
-export default App;
+export default App

@@ -1,0 +1,29 @@
+@import "src/variabels/colors";
+
+.nav {
+  background: #ffffff;
+  box-shadow: 0 0 10px 5px $shadow;
+  padding: 10px 0;
+  &__logo {
+    font-size: 24px;
+    color: gray;
+  }
+  &__link {
+    font-size: 14px;
+    text-transform: uppercase;
+    margin-left: 20px;
+    a {
+      color: gray;
+      font-weight: 600;
+      transition: 200ms;
+      &:hover {
+        color: $red;
+      }
+    }
+    &.active {
+      a {
+        color: $red;
+      }
+    }
+  }
+}
